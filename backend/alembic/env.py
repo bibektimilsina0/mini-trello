@@ -10,7 +10,8 @@ from app.database import Base
 
 # Import every model module so Base.metadata knows about all tables —
 # autogenerate can only see models that have been imported somewhere.
-from app.models import user, token, workspace, board   # noqa: F401
+from app.models import user, token, workspace, board  # noqa: F401
+from app.models import list as list_model, card, comment
 
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.database_url)

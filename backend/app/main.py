@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth, workspaces, board
+from app.routers import auth, workspaces, board, lists, cards, comments
 
 app = FastAPI(title="TaskFlow API")
 
@@ -19,6 +19,9 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(workspaces.router)
 app.include_router(board.router)
+app.include_router(lists.router)
+app.include_router(cards.router)
+app.include_router(comments.router)
 
 @app.get("/health")
 def health_check():

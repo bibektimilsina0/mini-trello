@@ -23,6 +23,9 @@ async def _get_position_value(db: AsyncSession, list_id: uuid.UUID | None) -> fl
     row = await db.get(List, list_id)
     return row.position if row else None
 
+async def list_lists_for_board(db: AsyncSession, board_id: uuid.UUID) -> list[List]:
+    result = await db.scalars(select(List).where(List.board_id == board_id).order_by(List.position))
+    return list(result)
 
 async def create_list(db: AsyncSession, board_id: uuid.UUID, title: str, after_list_id: uuid.UUID | None) -> List:
     after_pos = await _get_position_value(db, after_list_id)

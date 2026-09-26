@@ -12,6 +12,13 @@ from app.services import list_service
 
 router = APIRouter(tags=["lists"])
 
+@router.get("/api/boards/{board_id}/lists", response_model=list[ListOut])
+async def list_lists(
+    db: AsyncSession = Depends(get_db),
+    board: Board = Depends(require_board_access),
+):
+    lists = await list_service.list_lists_for_board(db, board.id)
+    return [ListOut.model_validate(l) for l in lists]
 
 @router.post("/api/boards/{board_id}/lists", response_model=ListOut, status_code=status.HTTP_201_CREATED)
 async def create_list(
